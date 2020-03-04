@@ -1,5 +1,5 @@
 const CommandPointsComponent = {
-    props: ["players"],
+    props: ["players", "user"],
     template: `
     <div class="row">
         <div class="column" v-for="player in players">
@@ -9,12 +9,12 @@ const CommandPointsComponent = {
                     <div class="value">{{ player.cp }}</div>
                     <div class="label">of {{ player.maxCp }}</div>
                 </div>
-                <div class="ui two buttons">
-                    <button class="ui button icon">
+                <div class="ui two buttons" v-if="player.id == user">
+                    <button class="ui button icon" @click="$emit('gamePoints', { id: player.id, add: false, key: 'cp' })">
                         <i class="ui icon minus"></i>
                     </button>
                     <div class="or"></div>
-                    <button class="ui button icon">
+                    <button class="ui button icon" @click="$emit('gamePoints', { id: player.id, add: true, key: 'cp' })">
                         <i class="ui icon plus"></i>
                     </button>
                 </div>

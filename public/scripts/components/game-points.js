@@ -1,5 +1,5 @@
 const GamePointsComponent = {
-    props: ["players"],
+    props: ["players", "user"],
     template: `
     <div class="ui segments">
         <div class="ui segment">
@@ -20,12 +20,12 @@ const GamePointsComponent = {
             </div>
             <div class="ui grid ">
                 <div class="eight wide column" v-for="player in players">
-                    <div class="ui two buttons inverted">
-                        <button class="ui button icon inverted">
+                    <div class="ui two buttons inverted" v-if="player.id == user">
+                        <button class="ui button icon inverted" @click="$emit('gamePoints', { id: player.id, add: false, key: 'vp' })" tabindex="0">
                             <i class="ui icon minus"></i>
                         </button>
                         <div class="or"></div>
-                        <button class="ui button icon inverted">
+                        <button class="ui button icon inverted" @click="$emit('gamePoints', { id: player.id, add: true, key: 'vp' })" tabindex="0">
                             <i class="ui icon plus"></i>
                         </button>
                     </div>
