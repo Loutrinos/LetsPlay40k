@@ -48,17 +48,30 @@ const ActiveGameComponent = {
                 });
             });
         },
+        spectate() {
+            this.userLoggedIn = true;
+            localStorage.setItem("spectate", true);
+        },
         checkLoggedIn() {
             var localUser = localStorage.getItem("user");
+            var spectate = localStorage.getItem("spectate");
             if (localUser) {
                 this.userLoggedIn = true;
                 this.user = localUser;
             }
+
+            if (spectate) {
+                this.userLoggedIn = true;
+                this.user = "";
+            }
+
+            
         },
         logout() {
             this.userLoggedIn = false;
             this.user = "";
             localStorage.removeItem("user");
+            localStorage.removeItem("spectate");
         }
     },
     components: {
@@ -81,25 +94,40 @@ const ActiveGameComponent = {
         </div>
         <div class="ui divider"></div>
         <div class="two ui buttons">
-            <div class="ui button basic mini" @click=logout>Logout</div>
-            <div class="ui button basic red">Finish Game</div>
+            <div class="ui button basic mini" @click=logout v-if="user">Logout</div>
+            <div class="ui button basic red" v-if="user">Finish Game</div>
+            <div class="ui button basic red" v-if="!user" @click=logout>Exit</div>
         </div>
         <div class="ui divider"></div>
     </div>
-    <div class="login" v-if='!userLoggedIn'>
+    <div class="login" v-if='!userLoggedIn && activeGameData'>
         <div class="ui segment raised">
             <h1>Login</h1>
             <div class="ui action fluid input">
                 <input type="text" placeholder="Enter User's Name" ref="login">
                 <button class="ui button" @click=login>Login</button>
             </div>
-        </div>
-        <div class="ui negative message" v-if='showMessage'>
-            <div class="header">
-                The user does not exist
+
+            <div class="ui negative tiny message" v-if='showMessage'>
+                <div class="header">
+                    The user does not exist
+                </div>
+                <p>Please try again!</p>
             </div>
-            <p>Please try again!</p>
+
+            <div class="ui divider horizontal">or</div>
+
+            <h2>Spectate</h2>
+            <div class="ui middle aligned divided list">
+                <div class="item">
+                    <div class="right floated content">
+                        <a class="ui button tiny" @click="spectate">Enter</a>
+                    </div>
+                    <div class="middle aligned content"><h3>{{ activeGameData[0].name }} ({{ activeGameData[0].vp }}) vs {{ activeGameData[1].name }} ({{ activeGameData[1].vp }})</h3></div>
+                </div>
+            </div>
         </div>
+        
     </div>
     
     </div>`
