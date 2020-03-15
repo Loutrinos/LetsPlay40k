@@ -14,4 +14,41 @@
 .objectives {
   height: 30px;
 }
+
+.new-game .hidden {
+  visibility: hidden;
+  height: 0;
+  opacity: 0;
+}
+
+.small-tooltip {
+  width: 80px;
+}
+
+.map-selection-item {
+  height: 85px;
+}
+
+.map-selection-item .field {
+  height: 100%;
+}
+
+.map-selection-item .ui.radio {
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.ui.header.heading {
+  text-transform: capitalize;
+}
+
+.content-section {
+  margin-top: 2rem;
+}
 /*# sourceMappingURL=main.css.map */
