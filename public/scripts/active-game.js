@@ -6,6 +6,50 @@ import { ItcObjectivesSecondariesComponent } from "./components/itc-objectives-s
 var db = firebase.firestore();
 
 const ActiveGameComponent = {
+    data: () => ({ activeGame: {}, user: "", gameId: "" }),
+    created() {
+        this.getDataFromDB();
+    },
+    methods: {
+        getDataFromDB() {
+            // get logged in user
+            this.user = window.localStorage.getItem("user");
+            // get active game
+            this.gameId = this.$route.params.id;
+            if (!this.gameId) {
+                this.$router.push("/home");
+            }
+            db.collection("games").doc(this.gameId).onSnapshot(snapshot => {
+                this.activeGame = snapshot.data();
+            });
+        },
+        onUpdate(data) {
+            const { key, id, add, parent } = data;
+            console.log(data);
+            var updatedGame = { ...this.activeGame };
+            var player = updatedGame.players.filter(player => player.id === this.user * 1)[0];
+            console.log(player);
+            if (!parent) {	
+                player[key] = add ? player[key] + 1 : player[key] - 1;	
+                if (player[key] < 0) {
+                    player[key] = 0;
+                }
+            } else {	
+                (player[parent])[key] = add ? (player[parent])[key] + 1 : (player[parent])[key] - 1;	
+                if ((player[parent])[key] < 0) {
+                    (player[parent])[key] = 0;
+                }
+            }
+
+            db.collection("games").doc(this.gameId).update(updatedGame);
+        },
+        exit() {
+            if (this.user) {
+                localStorage.removeItem("user");
+            };
+            this.$router.go(-1);
+        }
+    },
     components: {
         "game-points-component": GamePointsComponent,
         "command-points-component": CommandPointsComponent,
@@ -13,8 +57,8 @@ const ActiveGameComponent = {
         "itc-objectives-secondaries-component": ItcObjectivesSecondariesComponent
     },
     template: `
-    Hello
-    <div class="active-game" v-if='activeGameId !== "" || !user'>
+    
+    <div class="active-game main-container">
         <game-points-component :user="user" :players="activeGame.players" @gamePoints=onUpdate></game-points-component>
         <h4 class="ui horizontal divider header">
             <i class="icon icon-bolter-mkv"></i>
@@ -27,9 +71,9 @@ const ActiveGameComponent = {
         </div>
         <div class="ui divider"></div>
         <div class="two ui buttons">
-            <div class="ui button basic mini" @click=logout v-if="user">Logout</div>
+            <div class="ui button basic mini" @click=exit() v-if="user">Logout</div>
             <div class="ui button basic red" v-if="user">Finish Game</div>
-            <div class="ui button basic red" v-if="!user" @click=logout>Exit</div>
+            <div class="ui button basic red" v-if="!user" @click=exit()>Exit</div>
         </div>
         <div class="ui divider"></div>
     </div>

@@ -12,7 +12,7 @@ const ItcObjectivesComponent = {
     props: ["players", "user"],
     template: `
     <div class="row">
-        <div class="column" v-for="player in players">
+        <div class="column" v-for="player in players" v-if="player.primaries">
             <h5>Primary Objectives:</h5>
             <div class="ui middle aligned divided list">
                 <div class="item objectives" v-for="objective in objectives">

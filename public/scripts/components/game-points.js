@@ -2,7 +2,6 @@ const GamePointsComponent = {
     props: ["players", "user"],
     template: `
     <div class="ui segments">
-    {{ players }}
         <div class="ui segment">
             <div class="ui two column center aligned grid">
                 <div class="ui vertical divider inverted">VS</div>

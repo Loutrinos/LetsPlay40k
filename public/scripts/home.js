@@ -19,17 +19,17 @@ const HomeComponent = {
         login() {
             db.collection("players").where("name", "==", this.$refs.login.value).get().then(query => {
                 this.showMessage = false;
+                console.log("login");
                 if (query.empty) {
                     this.showMessage = true;
                 }
 
                 query.forEach(player => {
                     this.user = player.data().id;
-                    localStorage.setItem("user", player.data().id);
-
-                    const userGame = this.activeGames.filter(game => game.players.filter(player => player === user))
-                    if (userGame) {
-                        this.navigateToGame(userGame.id);
+                    localStorage.setItem("user", player.data().id);                    
+                    const userGame = this.activeGames.filter(game => game.players.filter(player => player.id === this.user).length)
+                    if (userGame[0]) {
+                        this.navigateToGame(userGame[0].id);
                     }
                 });
             });
@@ -38,10 +38,11 @@ const HomeComponent = {
             if (!gameId) {
                 return;
             }
-            this.router.push({ path: "/active/:id", params: { id: gameId } });
+            this.$router.push({ path: `/active/${gameId}` });
         }
     },
-    template: `<div class="main-container">
+    template: `
+    <div class="main-container">
     <div class="login">
         <div class="ui segment raised">
             <h1>Login</h1>

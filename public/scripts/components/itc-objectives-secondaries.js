@@ -14,7 +14,7 @@ const ItcObjectivesSecondariesComponent = {
     props: ["players", "user"],
     template: `
     <div class="row">
-        <div class="column" v-for="player in players">
+        <div class="column" v-for="player in players" v-if="player.secondaries">
             <h5>Secondary Objectives:</h5>
             <div class="ui middle aligned divided list">
                 <div class="item objectives" v-for="objective in objectives" v-if="player.secondaries[objective] != undefined">
