@@ -47,7 +47,8 @@ const NewGameComponent = {
                     name: "",
                     cp: "",
                     factions: "",
-                    secondaries: []
+                    secondaries: [],
+                    text: ""
                 },
                 {
                     name: "",
@@ -157,7 +158,7 @@ const NewGameComponent = {
         
         <h4 class="ui dividing header"></h4>
         <button class="ui button" type="submit" :click="formSubmit">Submit</button>
-        <div class="ui message error" v-if="model.error.length ">
+        <div class="ui message error" v-if="model.error.length">
             <div class="header">Please select the following:</div>
             <ul class="list">
                 <li v-for="error in model.error">{{ error }}</li>
@@ -179,7 +180,9 @@ const NewGameComponent = {
             if (this.data.map.value == "") { messages.push("map"); }
 
             this.data.players[0].factions = $(".ui.dropdown.first").dropdown("get value");
+            if (this.data.players[0].factions != []) { this.data.players[0].text = this.factions.filter(faction => faction.value === this.data.players[0].factions)[0].texts }
             this.data.players[1].factions = $(".ui.dropdown.second").dropdown("get value");
+            if (this.data.players[1].factions != []) { this.data.players[1].text = this.factions.filter(faction => faction.value === this.data.players[1].factions)[0].texts }
 
             if (this.data.players[0].name == "") { messages.push("first player name"); }
             if (this.data.players[0].cp == "") { messages.push("first player CP"); }
@@ -193,9 +196,27 @@ const NewGameComponent = {
             
             if (messages.length > 0) {
                 this.model.error = messages;
-            } else {
-                this.model.error = undefined;
+                return;
             }
+
+            this.model.error = [];
+            this.postData();
+        },
+        postData() {
+            var db = firebase.firestore();
+            const autoId = this.randomId();
+            db.collection("games").doc(autoId).set({
+                active: true,
+                gameTypeValue: this.data.gameTypeValue,
+                map: this.data.map,
+                players: this.data.players,
+                spectate: true
+            }).then(() => {
+                console.log("new game added");
+            })
+        },
+        randomId() {
+            return '_' + Math.random().toString(36).substr(2, 20);
         }
     }
 };

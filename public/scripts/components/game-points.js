@@ -2,11 +2,12 @@ const GamePointsComponent = {
     props: ["players", "user"],
     template: `
     <div class="ui segments">
+    {{ players }}
         <div class="ui segment">
             <div class="ui two column center aligned grid">
                 <div class="ui vertical divider inverted">VS</div>
                 <div class="ui item column red" v-for="player in players">
-                    <i class="ui icon large" v-bind:class="'icon-'+ player.icon"></i> {{ player.faction }}
+                    <i class="ui icon large" v-bind:class="'icon-'+ player.factions"></i> {{ player.faction }}
                 </div>
             </div>
         </div>
