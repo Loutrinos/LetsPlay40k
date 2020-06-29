@@ -250,6 +250,7 @@ const NewGameComponent = {
                 spectate: true
             }).then(() => {
                 console.log("new game added");
+                this.$router.push("/home");
             })
         },
         randomId() {
