@@ -7,7 +7,7 @@ const HomeComponent = {
     },
     methods: {
         getDataFromDB() {
-            db.collection("games").onSnapshot(query => {
+            db.collection("games").where("active", "==", true).onSnapshot(query => {
                 this.activeGameData = [];
                 query.docs.map(doc => {
                     const game = doc.data();
@@ -17,22 +17,15 @@ const HomeComponent = {
             });
         },
         login() {
-            db.collection("players").where("name", "==", this.$refs.login.value).get().then(query => {
-                this.showMessage = false;
-                console.log("login");
-                if (query.empty) {
-                    this.showMessage = true;
-                }
-
-                query.forEach(player => {
-                    this.user = player.data().id;
-                    localStorage.setItem("user", player.data().id);                    
-                    const userGame = this.activeGames.filter(game => game.players.filter(player => player.id === this.user).length)
-                    if (userGame[0]) {
-                        this.navigateToGame(userGame[0].id);
-                    }
-                });
-            });
+            this.showMessage = false;
+            const userGame = this.activeGames.filter(game => game.players.filter(player => player.name === this.$refs.login.value).length)
+            console.log(userGame[0]);
+            if (!userGame[0]) {
+                this.showMessage = true;
+                return;
+            }
+            localStorage.setItem("user", userGame[0].players.filter(player => player.name === this.$refs.login.value)[0].id);
+            this.navigateToGame(userGame[0].id);
         },
         navigateToGame(gameId) {
             if (!gameId) {

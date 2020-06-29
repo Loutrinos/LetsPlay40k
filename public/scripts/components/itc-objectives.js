@@ -13,8 +13,8 @@ const ItcObjectivesComponent = {
     template: `
     <div class="row">
         <div class="column" v-for="player in players" v-if="player.primaries">
-            <h5>Primary Objectives:</h5>
-            <div class="ui middle aligned divided list">
+            <h5 v-if="player.primaries">Primary Objectives:</h5>
+            <div v-if="player.primaries" class="ui middle aligned divided list">
                 <div class="item objectives" v-for="objective in objectives">
                     <div class="right floated content">
                         <button class="ui button icon mini" @click="$emit('gamePoints', { id: player.id, add: false, key: objective, parent: 'primaries' })" v-if="player.id == user">

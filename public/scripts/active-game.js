@@ -21,14 +21,13 @@ const ActiveGameComponent = {
             }
             db.collection("games").doc(this.gameId).onSnapshot(snapshot => {
                 this.activeGame = snapshot.data();
+                this.calculatePoints();
             });
         },
         onUpdate(data) {
             const { key, id, add, parent } = data;
-            console.log(data);
             var updatedGame = { ...this.activeGame };
-            var player = updatedGame.players.filter(player => player.id === this.user * 1)[0];
-            console.log(player);
+            var player = updatedGame.players.filter(player => player.id === this.user)[0];
             if (!parent) {	
                 player[key] = add ? player[key] + 1 : player[key] - 1;	
                 if (player[key] < 0) {
@@ -48,6 +47,12 @@ const ActiveGameComponent = {
                 localStorage.removeItem("user");
             };
             this.$router.go(-1);
+        },
+        finish() {
+            const updatedGame = { ...this.activeGame };
+            updatedGame.active = false
+            db.collection("games").doc(this.gameId).update(updatedGame);
+            this.exit();
         }
     },
     components: {
@@ -72,7 +77,7 @@ const ActiveGameComponent = {
         <div class="ui divider"></div>
         <div class="two ui buttons">
             <div class="ui button basic mini" @click=exit() v-if="user">Logout</div>
-            <div class="ui button basic red" v-if="user">Finish Game</div>
+            <div class="ui button basic red" v-if="user" @click=finish()>Finish Game</div>
             <div class="ui button basic red" v-if="!user" @click=exit()>Exit</div>
         </div>
         <div class="ui divider"></div>

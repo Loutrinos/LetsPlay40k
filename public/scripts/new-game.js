@@ -18,21 +18,20 @@ const NewGameComponent = {
                 { value: "sisters-of-battle", text: "Adepta Sororitas" }
             ],
             secondaries: [
+                { value: "os", text: "Old School" },
                 { value: "hh", text: "Headhunter" },
-                { value: "ks", text: "Kingslayer" },
                 { value: "mfd", text: "Marked For Death" },
-                { value: "ts", text: "Titan Slayers" },
                 { value: "gb", text: "Gang Busters" },
                 { value: "bgh", text: "Big Game Hunter" },
-                { value: "pyp", text: "Pick Your Poison" },
-                { value: "bb", text: "Butcher’s Bill" },
+                { value: "tbb", text: "The Butcher’s Bill" },
                 { value: "tr", text: "The Reaper" },
                 { value: "r", text: "Recon" },
                 { value: "bel", text: "Behind Enemy Lines" },
                 { value: "gc", text: "Ground Control" },
                 { value: "koth", text: "King of the Hill" },
                 { value: "e", text: "Engineers" },
-                { value: "os", text: "Old School" }
+                { value: "s", text: "Sappers" },
+                { value: "tp", text: "The Postman" }
             ],
             error: ""
         },
@@ -48,12 +47,24 @@ const NewGameComponent = {
                     cp: "",
                     factions: "",
                     secondaries: [],
+                    primaries: {
+                        kill: 0,
+                        killM: 0,
+                        obj: 0,
+                        objM: 0
+                    },
                     text: ""
                 },
                 {
                     name: "",
                     cp: "",
                     factions: "",
+                    primaries: {
+                        kill: 0,
+                        killM: 0,
+                        obj: 0,
+                        objM: 0
+                    },
                     secondaries: []
                 }
             ]
@@ -113,7 +124,7 @@ const NewGameComponent = {
             <input type="text" name="first-player-name'" v-model="data.players[0].name" placeholder="Name">
         </div>
         <div class="field">
-            <input type="text" name="first-command-points" v-model="data.players[0].cp" placeholder="CP">
+            <input type="number" name="first-command-points" v-model="data.players[0].cp" placeholder="CP">
         </div>
         <div class="field">
             <div class="ui selection dropdown first">
@@ -137,7 +148,7 @@ const NewGameComponent = {
             <input type="text" name="second-player-name" v-model="data.players[1].name" placeholder="Name">
         </div>
         <div class="field">
-            <input type="text" name="second-command-points" v-model="data.players[1].cp" placeholder="CP">
+            <input type="number" name="second-command-points" v-model="data.players[1].cp" placeholder="CP">
         </div>
         <div class="field">
             <div class="ui selection dropdown second">
@@ -180,17 +191,17 @@ const NewGameComponent = {
             if (this.data.map.value == "") { messages.push("map"); }
 
             this.data.players[0].factions = $(".ui.dropdown.first").dropdown("get value");
-            if (this.data.players[0].factions != []) { this.data.players[0].text = this.factions.filter(faction => faction.value === this.data.players[0].factions)[0].texts }
+            if (this.data.players[0].factions != []) { this.data.players[0].text = this.model.factions.filter(faction => faction.value === this.data.players[0].factions)[0].text }
             this.data.players[1].factions = $(".ui.dropdown.second").dropdown("get value");
-            if (this.data.players[1].factions != []) { this.data.players[1].text = this.factions.filter(faction => faction.value === this.data.players[1].factions)[0].texts }
+            if (this.data.players[1].factions != []) { this.data.players[1].text = this.model.factions.filter(faction => faction.value === this.data.players[1].factions)[0].text }
 
             if (this.data.players[0].name == "") { messages.push("first player name"); }
-            if (this.data.players[0].cp == "") { messages.push("first player CP"); }
+            if (this.data.players[0].cp == 0) { messages.push("first player CP"); }
             if (this.data.players[0].factions == []) { messages.push("first player faction"); }
             if ((this.data.gameTypeValue == "itc") && (this.data.players[0].secondaries.length == 0)) { messages.push("first player secondaries"); }
 
             if (this.data.players[1].name == "") { messages.push("second player name"); }
-            if (this.data.players[1].cp == "") { messages.push("second player CP"); }
+            if (this.data.players[1].cp == 0) { messages.push("second player CP"); }
             if (this.data.players[1].factions == []) { messages.push("second player faction"); }
             if ((this.data.gameTypeValue == "itc") && (this.data.players[1].secondaries.length == 0)) { messages.push("second player secondaries"); }
             
@@ -199,17 +210,43 @@ const NewGameComponent = {
                 return;
             }
 
+            const players = [];
+            
+            this.data.players[0].cp = this.data.players[0].cp * 1;
+            this.data.players[0].maxCp = this.data.players[0].cp
+            this.data.players[0].id = this.randomId();
+            this.data.players[0].vp = 0;
+
+            players.push({ ...this.data.players[0]});
+            let tempSecondaries = Object.assign({}, ...this.data.players[0].secondaries.map(secondary => ({[secondary]: 0})));
+            players[0].secondaries = { ...tempSecondaries };
+
+            this.data.players[1].cp = this.data.players[1].cp * 1;
+            this.data.players[1].maxCp = this.data.players[1].cp
+            this.data.players[1].id = this.randomId();
+            this.data.players[1].vp = 0;
+            tempSecondaries = Object.assign({}, ...this.data.players[1].secondaries.map(secondary => ({[secondary]: 0})));
+            players.push({ ...this.data.players[1]});
+            players[1].secondaries = { ...tempSecondaries };
+            
             this.model.error = [];
-            this.postData();
+            this.postData(players);
         },
-        postData() {
+        postData(players) {
             var db = firebase.firestore();
             const autoId = this.randomId();
+            console.log({
+                active: true,
+                gameTypeValue: this.data.gameTypeValue,
+                map: this.data.map,
+                players,
+                spectate: true
+            });
             db.collection("games").doc(autoId).set({
                 active: true,
                 gameTypeValue: this.data.gameTypeValue,
                 map: this.data.map,
-                players: this.data.players,
+                players,
                 spectate: true
             }).then(() => {
                 console.log("new game added");
