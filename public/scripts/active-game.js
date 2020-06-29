@@ -21,7 +21,6 @@ const ActiveGameComponent = {
             }
             db.collection("games").doc(this.gameId).onSnapshot(snapshot => {
                 this.activeGame = snapshot.data();
-                this.calculatePoints();
             });
         },
         onUpdate(data) {
