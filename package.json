@@ -1,6 +1,6 @@
 {
-  "name": "40kphotos",
-  "version": "1.0.0",
+  "name": "letsPlay40k",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {

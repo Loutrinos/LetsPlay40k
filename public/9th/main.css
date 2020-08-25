@@ -1,0 +1,74 @@
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+.main-content {
+  width: 100%;
+  height: calc(100% - 57px);
+}
+
+.main-content > * {
+  height: 100%;
+  width: 100%;
+}
+
+.ui.menu .item.router-link-exact-active {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.home-component {
+  background-color: #D6D6D6;
+}
+
+.home-component:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  border: 160px solid transparent;
+  border-top-color: white;
+  left: calc(50% - 160px);
+  z-index: 1;
+}
+
+.home-component .main-logo {
+  z-index: 2;
+  position: relative;
+  height: 150px;
+}
+
+.home-component .main-logo img {
+  width: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
+.home-component h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin: 10px 0;
+}
+
+.home-component .login-form {
+  width: 80%;
+  max-width: 400px;
+  margin: 30px auto 0;
+}
+
+.new-game-component .ui.ordered.steps .step {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.new-game-component .ui.ordered.steps .step:before {
+  position: relative;
+  font-size: 1.4em;
+  margin: 0;
+}
+/*# sourceMappingURL=main.css.map */
