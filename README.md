@@ -1,16 +1,29 @@
-# letsPlay40k
-Simple application for 40k games (Matched and ITC) using VueJs and SemanticUI
+# letsplay40k
 
-## Installation
-You need to install globally firebase tools if you want to use firebase to save information
-
+## Project setup
 ```
-npm i -g firebase-tools
+npm install
 ```
-after that initialise and login to the firebase instance (Initial configuration provided in the repo)
 
-## Libraries
-- VueJs
-- SemanticUI
-- Firebase Tools
-- Live Scss Compiler (VS Extension)
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your unit tests
+```
+npm run test:unit
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
