@@ -1,0 +1,95 @@
+.new-game-component {
+  padding-bottom: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #C4C4C4;
+}
+
+.new-game-component .small-logo {
+  height: 50px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.new-game-component .small-logo img {
+  height: 100%;
+}
+
+.new-game-component .wizard-step {
+  height: calc(100vh - 160px);
+  padding: 10px;
+}
+
+.new-game-component .wizard-step-button {
+  height: 50px;
+  width: 90%;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.new-game-component h1 {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.wizard-step .item {
+  background: #fff;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.wizard-step .item input:checked + label {
+  color: white;
+  background: #000;
+}
+
+.wizard-step .item input:checked + label .selection {
+  background-color: #A32121;
+}
+
+.wizard-step label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 10px;
+  height: 45px;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.wizard-step label .text {
+  padding: 0 10px;
+  -webkit-transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.wizard-step label .selection {
+  width: 30px;
+  height: 30px;
+  background-color: #C4C4C4;
+  -webkit-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.wizard-step input:checked + label .image-expand svg {
+  fill: #F2F2F2;
+}
+
+.wizard-step .image-expand svg {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  fill: #525252;
+}
+/*# sourceMappingURL=new-game.css.map */

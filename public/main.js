@@ -13,7 +13,6 @@ const app = new Vue({
 
 var db = firebase.firestore();
 
-
 /**
  * Ideas
  * 
