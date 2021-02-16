@@ -1,0 +1,131 @@
+{
+    "wizard": [
+        {
+            "order": 1,
+            "id": 1,
+            "name": "opponent",
+            "title": "Select Opponent",
+            "values": [
+                {
+                    "id": 100001,
+                    "name": "George",
+                    "pass": "george"
+                },
+                {
+                    "id": 100002,
+                    "name": "Kyle",
+                    "pass": "kyle"
+                }
+            ]
+        },
+        {
+            "order": 2,
+            "name": "game-type",
+            "title": "Select Game Type",
+            "values": [
+                {
+                    "order": 1,
+                    "id": 10,
+                    "title": "Eternal War",
+                    "value": "eternal-war"
+                }
+            ]
+        },
+        {
+            "order": 3,
+            "name": "game-size",
+            "title": "Select Game Size",
+            "values": [
+                {
+                    "order": 1,
+                    "id": 100,
+                    "title": "Combat Patrol (500pts)",
+                    "value": "combat-patrol"
+                },
+                {
+                    "order": 2,
+                    "id": 101,
+                    "title": "Incursion (501-1000pts)",
+                    "value": "incursion"
+                },
+                {
+                    "order": 3,
+                    "id": 102,
+                    "title": "Strike Force (1001-2000pts)",
+                    "value": "strike-force"
+                },
+                {
+                    "order": 4,
+                    "id": 103,
+                    "title": "Onslaught (2001-3000pts)",
+                    "value": "onslaught"
+                }
+            ]
+        },
+        {
+            "order": 4,
+            "id": 4,
+            "name": "mission",
+            "title": "Select Mission",
+            "values": [
+                {
+                    "order": 1,
+                    "id": 1000,
+                    "title": "Incisive Attack",
+                    "value": "incisive-attack",
+                    "parent": 100,
+                    "textuals": {
+                        "image": "",
+                        "markup": "<h2>MISSION BRIEFING</h2><p>Two forces have dug in and fought to a stalemate. Adopting a new approach to the war, opportunistic bands of warriors now venture forth into no man’s land to seize vital ground and defeat the enemy with surgical assaults across the front.</p><h3>Mission Rules</h3><p>Sweep and Clear: In this mission, if you control an objective marker at the end of your Command phase, it remains under your control, even if you have no models within range of it, unless your opponent controls it at the end of any subsequent phase.</p><h2>PRIMARY OBJECTIVES</h2><p>Victory points are awarded for controlling objective markers, as follows: Take and Hold (Progressive): At the end of each player’s Command phase, the player whose turn it is scores 5 victory points for each of the following conditions they satisfy (for a maximum of 15 victory points):</p><ul><li>They control one or more objective markers.</li><li>They control two or more objective markers.</li><li>They control more objective markers than their opponent controls.</li></ul><p>This primary objective cannot be scored in the first battle round.</p><h2>SECONDARY OBJECTIVES</h2><p>In this mission, when the players are selecting their secondary objectives, they can, if they wish, choose for one of them to be Surgical Assault, below.</p><p>Surgical Assault (Progressive): Score 5 victory points if you control the objective marker in your opponent’s deployment zone at the end of your turn.</p>"
+                    }
+                },
+                {
+                    "order": 2,
+                    "id": 1001,
+                    "title": "Outriders",
+                    "value": "outriders",
+                    "parent": 100,
+                    "textuals": {
+                        "image": "",
+                        "markup": ""
+                    }
+                },
+                {
+                    "order": 3,
+                    "id": 1002,
+                    "title": "Encircle",
+                    "value": "encircle",
+                    "parent": 100,
+                    "textuals": {
+                        "image": "",
+                        "markup": ""
+                    }
+                }
+            ]
+        },
+        {
+            "order": 5,
+            "id": 5,
+            "name": "place-objectives",
+            "title": "Place Objectives",
+        },
+        {
+            "order": 6,
+            "id": 6,
+            "name": "battlefield",
+            "title": "Create the Battlefield"
+        },
+        {
+            "order": 7,
+            "id": 7,
+            "name": "secondaries",
+            "title": "Select Secondaries Objectives",
+            "values": [
+                {
+                    "id": 10000,
+                    "name": ""
+                }
+            ]
+        }
+    ]
+}

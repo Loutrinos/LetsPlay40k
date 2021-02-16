@@ -51,11 +51,6 @@
 	width: 100%;
 	height: calc(100% - 57px); // bottom fixed menu height
 	
-	& > * {
-		height: 100%;
-		width: 100%;
-	}
-	
 }
 
 .ui.menu .item.router-link-exact-active {
