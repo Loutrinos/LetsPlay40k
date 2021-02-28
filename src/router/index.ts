@@ -13,8 +13,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/new-game",
     name: "NewGame",
-    component: () =>
-      import("../views/NewGame.vue")
+    component: () => import("../views/NewGame.vue")
   }
 ];
 
